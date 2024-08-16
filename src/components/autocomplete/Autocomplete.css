@@ -1,0 +1,40 @@
+.autocomplete {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.autocomplete input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #d4d4d4;
+    border-radius: 4px;
+}
+
+.suggestions {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-top: none;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border-radius: 0 0 4px 4px;
+}
+
+.suggestions li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestion-active,
+.suggestions li:hover {
+    background-color: #ddd;
+}
+
+.no-suggestions {
+    padding: 10px;
+    color: #999;
+}

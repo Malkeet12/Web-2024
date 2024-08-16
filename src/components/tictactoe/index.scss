@@ -1,0 +1,14 @@
+.tic-container {
+    display: grid;
+    margin-bottom: 12px;
+
+    .cell {
+        cursor: pointer;
+        border: 1px solid grey;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+}
