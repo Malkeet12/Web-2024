@@ -39,6 +39,7 @@ const staticFlags = {
   },
 };
 const featureFlag = new FeatureFlag();
+console.log("instance", featureFlag instanceof FeatureFlag);
 featureFlag.initialize(staticFlags);
 
 console.log(featureFlag.isFeatureEnabled("enableNewDashboard", "production"));

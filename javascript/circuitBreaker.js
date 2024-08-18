@@ -1,38 +1,52 @@
-import { sleep } from "./common";
+export const circuitBreaker = (fn, failureCount, threshold) => {
+  let failures = 0;
+  let timeSinceLastFailure = 0;
+  let isClosed = false;
 
-const breaker = (limit, threshold) => {
-  let count = 0;
-  let time;
-
-  const makeApiCall = () => {
-    const timeGap = Date.now() - time;
-    if (count >= limit && timeGap < threshold) {
-      const message = `circuit break, try after  ${timeGap / 1000}s`;
-      console.log(message);
-      return message;
+  return function (...args) {
+    if (isClosed) {
+      if (Date.now() - timeSinceLastFailure < threshold) {
+        console.log("service unavailable");
+        return;
+      }
+      isClosed = true;
     }
-    count += 1;
-    if (!time) time = Date.now();
 
-    console.log("getting data");
-  };
-  return {
-    makeApiCall,
+    try {
+      const res = fn(...args);
+      failures = 0;
+      return res;
+    } catch (e) {
+      failures++;
+      timeSinceLastFailure = Date.now();
+      if (failures >= failureCount) {
+        isClosed = true;
+      }
+      console.log("error", e);
+    }
   };
 };
 
-const instance = breaker(5, 2000);
-console.log(instance);
-instance.makeApiCall();
-instance.makeApiCall();
-instance.makeApiCall();
-instance.makeApiCall();
-instance.makeApiCall();
-instance.makeApiCall();
-instance.makeApiCall();
-instance.makeApiCall();
-instance.makeApiCall();
-await sleep(3000);
-instance.makeApiCall();
-instance.makeApiCall();
-instance.makeApiCall();
+const testFunction = () => {
+  let count = 0;
+  return function () {
+    count++;
+    if (count < 4) throw "failed";
+    else return "success";
+  };
+};
+
+let t = testFunction();
+
+const c = circuitBreaker(t, 3, 100);
+c();
+c();
+c();
+c();
+c();
+c();
+c();
+c();
+setTimeout(() => {
+  console.log(c());
+}, 300); // "hello";
