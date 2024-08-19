@@ -1,9 +1,16 @@
 - event loop
+  - DONE
 - feature flag (react)
+  -- DONE
 - rate limiter
 - circuit breaker
 - pubsub
+- cache api call
 - analytics sdk
+- map async-->https://www.greatfrontend.com/questions/javascript/map-async-limit?list=async-operations
+- Promise polyfill
+- https://github.com/Malkeet12/Front-end/blob/main/js/polyfills.js
+- https://medium.com/@manojsingh047/polyfill-for-javascript-promise-81053b284e37
 - clone deep
 - json.stringify
 - json.parse
@@ -13,3 +20,6 @@
 - set timeout
 - throttle
 - debounce
+- https://bigfrontend.dev/problem/implement-async-helper-parallel
+- https://bigfrontend.dev/problem/implement-async-helper-sequence
+- tic tac toe
