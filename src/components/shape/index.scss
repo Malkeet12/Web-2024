@@ -1,12 +1,10 @@
 main {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.box-container {
-    display: flex;
-    gap: 10px;
+    display: grid;
+    /* grid-template-columns: repeat(auto,"100px"); */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 50px;
+    width: fit-content;
 }
 
 .hidden {
@@ -15,8 +13,8 @@ main {
 
 .box {
     border: 1px solid;
-    height: 50px;
-    width: 50px;
+    height: 100px;
+    width: 100px;
 }
 
 .selected {

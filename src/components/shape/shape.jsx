@@ -1,6 +1,5 @@
 import { useMemo, useRef, useState, useEffect } from "react";
-
-
+import "./index.scss"
 // Use this data to create the shape
 const BOX_DATA = [
     [1, 0, 1],
@@ -8,65 +7,70 @@ const BOX_DATA = [
     [1, 1, 1],
 ];
 
-export default function App() {
-    const boxes = useMemo(() => BOX_DATA.flat(Infinity), [])
+export function Shape() {
+    const boxes = useMemo(() => BOX_DATA.flat(), []);
 
     const [selected, setSelected] = useState(new Set());
-    const [rollingBack, setRollingBack] = useState(false);
+    const [isRollingBack, setIsRollingBack] = useState(false);
     const intervalId = useRef(null);
 
-    const countofVisibleBoxes = useMemo(() => {
-        return boxes.reduce((acc, box) => {
-            if (box === 1) {
-                acc += 1;
-            }
-            return acc
-        }, 0)
-    }, [boxes])
+    const totalVisibleBoxes = useMemo(() => {
+        return boxes.filter(box => box === 1).length;
+    }, [boxes]);
 
     useEffect(() => {
-        if (!rollingBack) return;
+        if (!isRollingBack) return;
 
         intervalId.current = setInterval(() => {
-            setSelected((prevObject) => {
-                const arr = new Array(...prevObject.keys()).reverse();
-                const clone = new Set(prevObject);
-                clone.delete(arr[0]);
+            setSelected(prevSelected => {
+                const selectedArray = Array.from(prevSelected).reverse();
+                const newSelected = new Set(prevSelected);
+                newSelected.delete(selectedArray[0]);
 
-                if (clone.size === 0) {
-                    setRollingBack(false);
+                if (newSelected.size === 0) {
+                    setIsRollingBack(false);
                     clearInterval(intervalId.current); // Clear the interval before setting it to null
                     intervalId.current = null;
                 }
 
-                return clone;
+                return newSelected;
             });
         }, 300);
 
         return () => {
             clearInterval(intervalId.current);
         };
-    }, [rollingBack]);
+    }, [isRollingBack]);
 
-    const onSelect = (r) => {
-        if (rollingBack) return
-        const key = `index-${r}`
-        const clone = new Set(selected)
-        clone.add(key)
+    const handleSelect = (index) => {
+        if (isRollingBack) return;
+        const key = `index-${index}`;
 
-        if (clone.size === countofVisibleBoxes) {
-            setRollingBack(true)
-        }
-        setSelected(clone)
-    }
+        setSelected(prevSelected => {
+            const newSelected = new Set(prevSelected);
+            newSelected.add(key);
 
-    return <main >
-        {boxes.map((val, row) => {
-            const key = `index-${row}`
-            return (<div key={row}
-                onClick={() => onSelect(row)}
-                className={`box ${val ? "" : "hidden"} ${selected.has(key) ? "selected" : ""}`}>
-            </div>)
-        })}
-    </main>
+            if (newSelected.size === totalVisibleBoxes) {
+                setIsRollingBack(true);
+            }
+
+            return newSelected;
+        });
+    };
+
+    return (
+        <main>
+            {boxes.map((value, index) => {
+                const key = `index-${index}`;
+                return (
+                    <div
+                        key={index}
+                        onClick={() => handleSelect(index)}
+                        className={`box ${value ? "" : "hidden"} ${selected.has(key) ? "selected" : ""}`}
+                    >
+                    </div>
+                );
+            })}
+        </main>
+    );
 }
