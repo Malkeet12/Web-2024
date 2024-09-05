@@ -5,7 +5,7 @@
  * @return {object | Array | string | number | boolean | null}
  */
 function parse(str) {
-  if (str === "") {
+  if (!str || str === "") {
     throw new SyntaxError("Unexpected end of JSON input");
   }
   if (str[0] === "'") {
@@ -51,7 +51,8 @@ function parse(str) {
       .map((value) => parse(value));
   }
 }
-console.log(parse());
+// console.log(parse());
+console.log(parse('{"val":1}'));
 console.log(parse('["cur{ly"]'));
 console.log(JSON.stringify(["cur{ly"]));
 

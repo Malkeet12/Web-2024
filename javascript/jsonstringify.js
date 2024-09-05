@@ -33,6 +33,10 @@ export function stringify(data) {
       return `{${arr.join(",")}}`;
     }
     default:
+      console.log(typeof String(data));
       return String(data);
   }
 }
+const obj = { val: 1 };
+const a = stringify(obj);
+console.log(a, typeof a);

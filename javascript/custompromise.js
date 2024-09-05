@@ -1,37 +1,42 @@
-//Phase 1 But this implementation will not work if we decided to directly resolve a value instead of an async operation, because our handlers are not registered by the time our executor is called.
-// function CustomPromise(executer) {
-//   //The handlers we pass to .then and .catch methods are stored in local variables (onResolve,
-//   // onReject), so that they can be called when our async function is completed.
+//Phase 1 But this implementation will not work if we decided to directly resolve a value instead of an async operation,
+// because our handlers are not registered by the time our executor is called.
+function CustomPromise(executer) {
+  //The handlers we pass to .then and .catch methods are stored in local variables (onResolve,
+  // onReject), so that they can be called when our async function is completed.
 
-//   let onResolve;
-//   let onReject;
-//   let isCalled = false;
-//   function resolve(res) {
-//     if (typeof onResolve === "function" && !isCalled) {
-//       onResolve(res);
-//       isCalled = true;
-//     }
-//   }
-//   function reject(err) {
-//     if (typeof onResolve === "function" && !isCalled) {
-//       onReject(err);
-//       isCalled = true;
-//     }
-//   }
+  let onResolve;
+  let onReject;
+  let isCalled = false;
+  function resolve(res) {
+    if (typeof onResolve === "function" && !isCalled) {
+      onResolve(res);
+      isCalled = true;
+    }
+  }
+  function reject(err) {
+    if (typeof onResolve === "function" && !isCalled) {
+      onReject(err);
+      isCalled = true;
+    }
+  }
 
-//   this.then = function (thenHandler) {
-//     onResolve = thenHandler;
-//     return this;
-//   };
-//   this.catch = function (catchHandler) {
-//     onReject = catchHandler;
-//     return this;
-//   };
+  this.then = function (thenHandler) {
+    onResolve = thenHandler;
+    return this;
+  };
+  this.catch = function (catchHandler) {
+    onReject = catchHandler;
+    return this;
+  };
 
-//   executer(resolve, reject);
-// }
+  executer(resolve, reject);
+}
 
-class CustomPromise {
+const promise = new CustomPromise((resolve, reject) => setTimeout(() => resolve(23), 500))
+console.log(await promise)
+
+
+class CustomPromise1 {
   constructor(executor) {
     this.onResolve = null;
     this.onReject = null;

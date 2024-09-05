@@ -1,8 +1,7 @@
-export const circuitBreaker = (fn, failureCount, threshold) => {
+function circuitBreaker(fn, limit, threshold) {
   let failures = 0;
   let timeSinceLastFailure = 0;
   let isClosed = false;
-
   return function (...args) {
     if (isClosed) {
       if (Date.now() - timeSinceLastFailure < threshold) {
@@ -11,21 +10,21 @@ export const circuitBreaker = (fn, failureCount, threshold) => {
       }
       isClosed = true;
     }
-
     try {
       const res = fn(...args);
       failures = 0;
+      console.log("success");
       return res;
     } catch (e) {
       failures++;
-      if (failures >= failureCount) {
+      if (failures >= limit) {
         isClosed = true;
         timeSinceLastFailure = Date.now();
       }
-      console.log("error", e);
+      console.log(e);
     }
   };
-};
+}
 
 const testFunction = () => {
   let count = 0;
@@ -35,9 +34,7 @@ const testFunction = () => {
     else return "success";
   };
 };
-
 let t = testFunction();
-
 const c = circuitBreaker(t, 3, 100);
 c();
 c();
@@ -45,8 +42,6 @@ c();
 c();
 c();
 c();
-c();
-c();
 setTimeout(() => {
-  console.log(c());
-}, 300); // "hello";
+  c();
+}, 500);

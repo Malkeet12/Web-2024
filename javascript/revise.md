@@ -1,11 +1,8 @@
 - event loop
-  - DONE
 - feature flag (react)
-  -- DONE
 - rate limiter
 - circuit breaker
 - pubsub
-- cache api call
 - analytics sdk
 - map async-->https://www.greatfrontend.com/questions/javascript/map-async-limit?list=async-operations
 - Promise polyfill
@@ -23,3 +20,9 @@
 - https://bigfrontend.dev/problem/implement-async-helper-parallel
 - https://bigfrontend.dev/problem/implement-async-helper-sequence
 - tic tac toe
+- cache api call
+
+-prioritize non functional
+-time management
+-component architecture
+-state management

@@ -1,0 +1,24 @@
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.box-container {
+    display: flex;
+    gap: 10px;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.box {
+    border: 1px solid;
+    height: 50px;
+    width: 50px;
+}
+
+.selected {
+    background-color: green;
+}

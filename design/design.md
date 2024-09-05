@@ -1,0 +1,1 @@
+- https://developers.google.com/search/blog/2011/09/pagination-with-relnext-and-relprev

@@ -7,7 +7,7 @@ class FeatureFlagManager {
     this.featureFlags = {};
     FeatureFlagManager.instance = this;
 
-    return this;
+    // return this;
   }
 
   // Initialize feature flags from a static object, environment, or remote source
@@ -79,3 +79,20 @@ const instance = new FeatureFlagManager();
 Object.freeze(instance.constructor.prototype);
 
 export default instance;
+
+const staticFlags = {
+  development: {
+    enableNewDashboard: true,
+    enableBetaFeature: true,
+  },
+  production: {
+    enableNewDashboard: false,
+    enableBetaFeature: false,
+  },
+};
+const featureFlag = new FeatureFlagManager();
+console.log("instance", featureFlag instanceof FeatureFlagManager);
+featureFlag.init(staticFlags);
+
+console.log(featureFlag.isFeatureEnabled("enableNewDashboard", "production"));
+console.log(featureFlag.getEnvironments());
