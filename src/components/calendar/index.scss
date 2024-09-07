@@ -1,0 +1,47 @@
+.row {
+    display: flex;
+    width: 100%;
+    justify-content: left;
+    height: 60px;
+    align-items: center;
+}
+
+.time {
+    width: 70px;
+}
+
+.block {
+    border: 1px solid grey;
+    flex: 1;
+}
+
+.meeting {
+    border: 1px solid grey;
+    flex: 1;
+    right: 0;
+    border-radius: 4px;
+    padding: 2px 4px;
+    position: absolute;
+    width: calc(100% - 100px);
+    left: 80px;
+    box-sizing: border-box;
+}
+
+.content {
+    border-radius: 4px;
+    padding: 2px 4px;
+}
+
+.overlap {
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+}
+
+.meetings {
+    border-left: 1px solid grey;
+    height: 100vh;
+    width: 100%;
+    top: 0;
+    position: absolute;
+    left: 85px;
+}

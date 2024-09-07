@@ -1,0 +1,12 @@
+.circles {
+    width: 100vw;
+    height: 100vh;
+
+    .circle {
+        position: absolute;
+        border-radius: 50%;
+        width: 200px;
+        height: 200px;
+        opacity: 0.5;
+    }
+}

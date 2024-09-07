@@ -8,6 +8,8 @@ import { TicTacToe } from "./components/tictactoe/tictactoe";
 import { Tweet } from "./components/tweet/tweet";
 import { Shape } from "./components/shape/shape";
 import { ProgressbarContainer } from "./components/progressbar/progressbarHard";
+import { OverlappingCircle } from "./components/overlappingCircle/overlappingCircle";
+import { Calendar } from "./components/calendar/calendar";
 // import { FeatureFlagContainer } from "./practice/featureflagtest/featureFlag";
 
 export default function App() {
@@ -52,10 +54,16 @@ export default function App() {
       label: "progress",
       children: <ProgressbarContainer />,
     },
+    {
+      key: "9",
+      label: "Calendar",
+      children: <Calendar />,
+    },
   ];
+  // return <OverlappingCircle />
   return (
     <div className="App">
-      <Tabs defaultActiveKey="8" items={items} />
+      <Tabs defaultActiveKey="9" items={items} />
     </div>
   );
 }
